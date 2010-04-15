@@ -1,0 +1,22 @@
+{% extends "examples/example_template.html" %}
+
+{% block scripthead %}
+{% include "examples/espell.js" %}
+{% endblock %}
+
+{% block main %}
+		<h1>Espell Example</h1>
+		<p>
+			This example sends an incorrectly spelt term to the Entrez espell interface
+			and returns the corrected query.
+		</p>
+		<p>
+			<form method="GET" action="?">
+				Search for <input type="text" name="term" value="{{ term }}"> <input type="submit" value=" Go ">
+			</form>
+		</p>
+{% endblock %}
+
+{% block scriptdisplay %}
+{% include "examples/espell.js" %}
+{% endblock %}

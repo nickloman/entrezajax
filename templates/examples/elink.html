@@ -1,0 +1,29 @@
+{% extends "examples/example_template.html" %}
+
+{% block scripthead %}
+{% include "examples/elink.js" %}
+{% include "examples/elink_2.js" %}
+{% endblock %}
+
+{% block main %}
+		<h1>Elink Example</h1>
+		<p>
+			To retrieve PubMed related articles for PMIDs 11812492 11774222 with a publication date from 1995 to the present:
+		</p>
+		<div id="result">
+			Contacting NCBI Entrez ...  <img src="/static/img/loading.gif">
+		</div>
+		<p>
+			To retrieve PubMed related-articles for nucleotide identifier 283046693 (Homo sapiens TRIM5)
+		</p>
+		<div id="result2">
+			Contacting NCBI Entrez ...  <img src="/static/img/loading.gif">
+		</div>
+{% endblock %}
+{% block result %}
+{% endblock %}
+
+{% block scriptdisplay %}
+{% include "examples/elink.js" %}
+{% include "examples/elink_2.js" %}
+{% endblock %}

@@ -1,0 +1,18 @@
+			h1, h2, h3, h4 {
+				font-family: Arial Bold, Arial, Sans-Serif;
+			}
+
+			ul, p, table, div {
+				font-family: Georgia;
+			}
+
+			.code {
+				font-family: Courier;
+			}
+
+			.narrow {
+				width: 75%;
+				margin-left: 20px;
+				padding-left: 20px;
+				border-left: 3px solid black;
+			}

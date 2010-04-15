@@ -1,0 +1,58 @@
+
+from django.core.cache import cache
+from django.http import HttpResponse
+from Bio import Entrez
+import json
+
+Entrez.email = "n.j.loman@bham.ac.uk"
+
+class EntrezCache:
+    def __init__(self):
+        self.cache_key = None
+        pass
+
+    def create_cache_key(self, interface, **kwargs):
+        keydict = {'interface':interface}
+        keydict.update(kwargs)
+        keys = sorted(keydict.keys())
+        return "&".join(["%s=%s" % (k, keydict[k]) for k in keys])
+
+    def esummary(self, **kwargs):
+        cache_key = self.create_cache_key('esummary', **kwargs)
+        result = cache.get(cache_key)
+        if result:
+            return result
+        else:
+            handle = Entrez.esummary(**kwargs)
+            return Entrez.read(handle)
+
+def summary_execute(db, term):
+    handle = Entrez.esearch(db=db, term=term)
+    record = Entrez.read(handle)
+    handle.close()
+
+    if not record["IdList"]:
+        return []
+
+    entrez = EntrezCache()
+    record = entrez.esummary(db=db, id=",".join(record["IdList"]), rettype="xml")
+    # record = entrez.read(handle)
+    handle.close()
+    return record
+
+def summary(request):
+    records = summary_execute(request.GET.get('db', 'pubmed'), request.GET['term'])
+    r = HttpResponse(mimetype="application/json")
+
+    callback = request.GET.get('callback', None)
+    if callback:
+        print >>r, "%s(" % (callback,),
+        json.dump(records, r)
+        print >>r, ")"
+    else:
+        json.dump(records, r)
+
+    return r
+
+print summary_execute('pubmed', 'Loman NJ')
+

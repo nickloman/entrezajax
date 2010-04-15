@@ -1,0 +1,21 @@
+{% extends "basic.html" %}
+
+{% block main %}
+		<h1>Entrez-AJAX</h1>
+		<h2>Register for a Developer API Key</h2>
+		<p>
+			All requests to the Entrez-AJAX service must be accompanied by
+			an API key. This is to help link requests to the originating
+			website, and ensure that services stay within the NCBI usage
+			limits. Simply fill out the required fields below to be given
+			an API key.
+		</p>
+		<table>
+			<form method="POST" action="?">
+				{{ form.as_table }}
+				<tr><td></td><td>
+				<input type="submit" value=" Request API Key ">
+				</td></tr>
+			</form>
+		</table>
+{% endblock %}

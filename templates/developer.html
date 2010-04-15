@@ -1,0 +1,157 @@
+{% extends "basic.html" %}
+
+{% block main %}
+		<h1>Entrez-AJAX</h1>
+		<h2>Developer Documentation</h2>
+		<h3>Use of this service</h3>
+		<p>
+			Use of this service assumes some familiarity with the
+			<a href="http://eutils.ncbi.nlm.nih.gov/">Entrez Programming Utilities (eUtils)</a>
+		</p>
+		<h3>AJAX Endpoint</h3>
+		<p>
+			All methods are accessed via http://entrezajax.appspot.com/&lt;method_name&gt;
+		</p>
+		<p>
+			The standard method names are analogous to the Entrez eUtils calls:
+		</p>
+		<ul>
+			<li>espell
+			<li>einfo
+			<li>esearch
+			<li>esummary
+			<li>efetch
+			<li>elink
+		</ul>
+		<p>
+			Additionally, a selection of combined methods are available which
+			chain two method calls together. The results of the first method
+			call are passed to the second via the <span class="code">id</span> parameter.
+		</p>
+		<ul>
+			<li>esearch+esummary
+			<li>esearch+efetch
+			<li>esearch+elink
+			<li>elink+esummary
+			<li>elink+efetch
+		</ul>
+		<p>
+			Each method accepts various parameters via the query string (i.e.
+			after the ? in the URL), i.e.
+			<br>http://entrezajax.appspot.com/esearch?db=pubmed&term=DNA+polymerase
+		</p>
+		<p>
+			Each method must also be passed a developer API key as parameter
+			<span class="code">apikey</span	>.
+			You must <a href="{% url register %}">register</a> to get a developer
+			API key.
+		</p>
+		<p>
+			All methods optionally take a parameter <span class="code">callback</span> to enable JSONP
+			mode. The value of <span class="code">callback</span> is the function name to
+			be called with the JSON object as the first argument. JavaScript libraries such
+			as jQuery automatically support the use of this keyword by specifying <span class="code">callback=?</span>
+			in the URL passed to the <span class="code">$.getJSON()</span> function.
+		</p>
+		<p>
+			Other parameters are set on a method-by-method basis detailed below.
+		</p>
+		<h3>Standard Methods</h3>
+		<h4>Efetch</h4>
+		<p>
+			NCBI Parameters: <span class="code">db, id, report, dispstart, dispmax</span>
+		</p>
+		<p>
+			<a href="http://eutils.ncbi.nlm.nih.gov/corehtml/query/static/efetch_help.html">Entrez documentation link</a>
+		</p>
+		<h4>Einfo</h4>
+		<p>
+			NCBI Parameters: <span class="code">db</span>
+		</p>
+		<p>
+			<a href="http://eutils.ncbi.nlm.nih.gov/corehtml/query/static/einfo_help.html">Entrez documentation link</a>
+		</p>
+		<h4>Elink</h4>
+		<p>
+			NCBI Parameters: <span class="code">db, id, reldate, mindate, maxdate, datetype, term, retmode, dbfrom, cmd, holding, version
+		</p>
+		<p>
+			<a href="http://eutils.ncbi.nlm.nih.gov/corehtml/query/static/elink_help.html">Entrez documentation link</a>
+		</p>
+		<h4>Esearch</h3>
+		<p>
+			NCBI Parameters: <span class="code">db, term, field, reldate, mindate, maxdate, datetype, retstart, retmax, rettype, sort
+		</p>
+		<p>
+			<a href="http://eutils.ncbi.nlm.nih.gov/corehtml/query/static/esearch_help.html">Entrez documentation link</a>
+		</p>
+		<h4>Espell</h4>
+		<p>
+			NCBI Parameters: <span class="code">db, term</span>
+		</p>
+		<p>
+			<a href="http://eutils.ncbi.nlm.nih.gov/corehtml/query/static/espell_help.html">Entrez documentation link</a>
+		</p>
+		<p>
+			<a href="/examples/espell.html">Example</a>
+		</p>
+		<h4>Esummary</h4>
+		<p>
+			NCBI Parameters: <span class="code">db, id, retstart, retmax</span>
+		</p>
+		<p>
+			<a href="http://eutils.ncbi.nlm.nih.gov/corehtml/query/static/esummary_help.html">Entrez documentation link</a>
+		</p>
+		<h3>Combined Methods</h3>
+		<p>
+			The combined methods take the same parameters as the individual methods.
+			The second method is always invocated with the ID list returned by
+			the first method.
+		</p>
+		<p>
+			<a href="/examples/esearch+esummary.html">Esearch+Esummary Example</a>
+		</p>
+		<p>
+			<a href="/examples/elink.html">Elink+Esummary Example</a>
+		</p>
+		<h3>Limits</h3>
+		<h4>Entrez eUtils</h4>
+		<p>
+			This service relies on NCBI eUtils to function and therefore respects the
+			developer limitations specified under <b>User Requirements</b> in the
+			<a href="http://eutils.ncbi.nlm.nih.gov/">eUtils documentation</a>.
+			Specifically, the service will enforce the requirement not to
+			make any more than 3 requests every 1 second to Entrez eUtils.
+			However, the service makes heavy use of caching and only requests
+			which are not fetched from the cache count towards this limit. This
+			means that you may be able to get higher throughput from this
+			service than from eUtils directly.
+		</p>
+		<p>
+			The service automatically applies the parameters
+			<span class="code">email</span>	and <span class="code">tool</span>
+			to requests based on the
+			supplied API key.
+		</p>
+		<p>
+			Please note the following requirements from NCBI which are your
+			responsibility to follow:
+			<ul>
+				<li>Run retrieval scripts on weekends or between 9 pm and 5 am Eastern Time weekdays for any series of more than 100 requests.
+				<li>NCBI's Disclaimer and Copyright notice must be evident to users of your service.  NLM does not claim the copyright on the abstracts in PubMed; however, journal publishers or authors may. NLM provides no legal advice concerning distribution of copyrighted materials, consult your legal counsel.
+			</ul>
+		</p>
+		<h4>Google App Engine</h4>
+		<p>
+			This service is deployed via Google App Engine which enforces
+			certain limitations on HTTP requests which are relevant to
+			the AJAX endpoint, specifically:
+			<ul>
+				<li>Each outgoing proxy HTTP request to Entrez eUtils must complete within a 10 second deadline
+				<li>Total time for a request to the AJAX endpoint cannot not exceed 30 seconds
+				<li>HTTP response size maximum 10MB (this would preclude displaying
+				    a human chromosome sequence in the browser, but you shouldn't
+				    be doing that anyway!)
+			</ul>
+		</p>
+{% endblock %}

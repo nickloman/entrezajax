@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<title>
+			Entrez-AJAX: PubMed Search Example
+		</title>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+		<script type="text/javascript" src="/static/ext/syntaxhighlighter/scripts/shCore.js"></script>
+		<script type="text/javascript" src="/static/ext/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+		<link href="/static/styles/styles.css" rel="stylesheet" type="text/css" />
+		<link href="/static/ext/syntaxhighlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+		<link href="/static/ext/syntaxhighlighter/styles/shThemeDefault.css" type="text/css" rel="stylesheet" />
+
+		<script>
+{% block scripthead %}
+{% endblock %}
+		</script>
+	</head>
+	<body>
+{% block main %}
+{% endblock %}
+{% block result %}
+		<div id="result">
+			Contacting NCBI Entrez ...  <img src="/static/img/loading.gif">
+		</div>
+{% endblock %}
+		<h2>Source Code</h2>
+		<div id="sourcecode" style="width: 1024px;">
+			<script type="syntaxhighlighter" class="brush: js; gutter: true;"><![CDATA[
+{% block scriptdisplay %}
+{% endblock %}
+]]></script>
+		</div>
+		<script type="text/javascript">
+			SyntaxHighlighter.all()
+		</script>
+	</body>
+</html>
