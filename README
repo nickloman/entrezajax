@@ -1,0 +1,23 @@
+
+EntrezAJAX
+
+Home page: http://entrezajax.appspot.com/
+
+
+To install as a Google App Engine instance:
+
+1) Download Django from www.djangoproject.com and unpack
+   to /django/
+
+2) Download BioPython from www.biopython.org and copy
+   source files to the root directory so that there
+   is a directory called 'Bio'
+
+3) Create a Google App Engine application
+
+4) Edit app.yaml to specify the name of the application
+
+5) Test with dev_appserver.py <directory_name>
+
+6) Upload with appcfg.py update <directory_name>
+
