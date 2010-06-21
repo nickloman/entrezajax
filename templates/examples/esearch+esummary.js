@@ -2,11 +2,13 @@ var search_term = "{{ term|escapejs }}";
 
 $(document).ready(function() {
 	args = {'apikey' : '191d24f81e61c107bca103f7d6a9ca10',
-	        'db' : 'pubmed',
-	        'term' : search_term};
+	        'db'   : 'pubmed',
+	        'term' : search_term,
+	        'max'  : 10,
+	        'start': 0};
 	$.getJSON('/esearch+esummary?callback=?', args,	function(data) {
 		$('#result').html('');
-		$.each(data, function(i, item) {
+		$.each(data.result, function(i, item) {
 			var author_list = '';
 			for(var i = 0; i < item.AuthorList.length; i ++) {
 				if(i != 0) {

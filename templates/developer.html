@@ -54,6 +54,12 @@
 			in the URL passed to the <span class="code">$.getJSON()</span> function.
 		</p>
 		<p>
+			Each method returns a JSON dictionary with two keys. <span class="code">result</span>
+			has the results from Entrez. <span class="code">entrezajax</span> is a dictionary
+			of additional information including a key <span class="code">error</span> which
+			is a boolean field determining whether an error occurred.
+		</p>
+		<p>
 			Other parameters are set on a method-by-method basis detailed below.
 		</p>
 		<h3>Standard Methods</h3>
@@ -106,14 +112,56 @@
 		<p>
 			The combined methods take the same parameters as the individual methods.
 			The second method is always invocated with the ID list returned by
-			the first method.
+			the first method. Combined parameters return an additional dictionary
+			field <span class="code">count</span> to detail the number of results
+			returned by the first method.
+		</p>
+		<h4>esearch+esummary</h4>
+		<p>
+			NCBI Parameters: as per Esearch
+		</p>
+		<p>
+			EntrezAJAX parameters: <span class="code">start</span>, <span class="code">max</span>
 		</p>
 		<p>
 			<a href="/examples/esearch+esummary.html">Esearch+Esummary Example</a>
 		</p>
+		<h4>esearch+efetch</h4>
+		<p>
+			NCBI Parameters: as per Esearch and Efetch
+		</p>
+		<p>
+			EntrezAJAX parameters: <span class="code">start</span>, <span class="code">max</span>
+		</p>
+		<h4>esearch+elink</h4>
+		<p>
+			NCBI Parameters: as per Esearch and Elink
+		</p>
+		<p>
+			EntrezAJAX parameters: <span class="code">start</span>, <span class="code">max</span>
+		</p>
+		<h4>elink+esummary</h4>
+		<p>
+			NCBI Parameters: as per Elink and Esummary
+		</p>
+		<p>
+			EntrezAJAX parameters: <span class="code">start</span>, <span class="code">max</span>
+		</p>
 		<p>
 			<a href="/examples/elink.html">Elink+Esummary Example</a>
 		</p>
+		<h4>elink+efetch</h4>
+		<p>
+			NCBI Parameters: as per Elink and Efetch
+		</p>
+		<p>
+			EntrezAJAX parameters: <span class="code">start</span>, <span class="code">max</span>
+		</p>
+		<p>
+			Combined methods all take the 0-based pagination parameter <span class="code">start</span>
+			and the search result restriction parameter <span class="code">max</span>.
+		</p>
+
 		<h3>Limits</h3>
 		<h4>Entrez eUtils</h4>
 		<p>

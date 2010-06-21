@@ -1,15 +1,17 @@
 {% extends "basic.html" %}
 
 {% block main %}
-		<h1>Entrez-AJAX</h1>
+		<h1>EntrezAJAX</h1>
 		<h2>An AJAX endpoint for NCBI's Entrez service</h2>
 		<p>
-			Entrez-AJAX provides an interface which returns JSON data from
+			EntrezAJAX provides an interface which returns JSON data from
 			the NCBI Entrez service which can be accessed by a web browser
 			directly. The interface can circumvent web browsers'
 			<a href="http://en.wikipedia.org/wiki/Same_origin_policy">same origin policies</a>
 			by supporting
-			<a href="http://en.wikipedia.org/wiki/JSON#JSONP">JSONP</a>. Read
+			<a href="http://en.wikipedia.org/wiki/JSON#JSONP">JSONP</a>.
+			A <a href="http://www.scfbm.org/content/5/1/6/abstract">manuscript describing the service</a>
+			has been published in Source Code for Biology and Medicine. You can also read
 			the <a href="http://pathogenomics.bham.ac.uk/blog/2010/04/entrez-ajax-a-restful-api-for-bioinformatics-web-app-developers/">initial announcement</a>.
 		</p>
 		<h2>What can it be used for?</h2>
@@ -20,12 +22,14 @@
 			<li><a href="examples/esearch+esummary.html">publication lists on your group website</a>
 			<li><a href="examples/espell.html">correct spelling in user-submitted data</a>
 			<li><a href="examples/elink.html">find related articles</a>
+			<li><a href="examples/efetch.html">search and fetch protein sequences</a>
 		</ul>
 		<h2>How do I use it?</h2>
 		<p>
 			If you are developing a website that needs access to NCBI Entrez
 			via AJAX then please <a href="{% url register %}">register for
-			an API key</a> and then <a href="/developer.html">read the API documentation.</a>
+			an API key</a> and then <a href="/developer.html">read the API documentation</a>.
+			There is also a <a href="/faq.html">FAQ</a>.
 		</p>
 		<h2>How does it work?</h2>
 		<p>
@@ -33,6 +37,16 @@
 			just curious how it works, please read the
 			<a href="/implementation.html">implementation details</a>.
 		</p>
+		<h2>News/updates</h2>
+		<p>21st June 2010</p>
+		<ul>
+			<li><a href="http://www.scfbm.org/content/5/1/6/abstract">Manuscript published in Source Code for Biology and Medicine</a>
+			<li><a href="/faq.html">Added a FAQ</a>
+			<li>Added the <a href="examples/efetch.html">search and fetch protein sequences</a> example
+			<li>JSON results are now a dictionary with two keys: <span class="code">result</span>
+			    and <span class="code">entrezajax</span>, the latter contains error information
+			<li>Gave a friendlier error when the 2Mb GAE limit is hit
+		</ul>
 		<h2>Contact</h2>
 		<p>
 			Contact <a href="mailto:n.j.loman@bham.ac.uk">Nick Loman</a> for

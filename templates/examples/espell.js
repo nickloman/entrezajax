@@ -5,10 +5,10 @@ $(document).ready(function() {
 	        'db' : 'pubmed',
 	        'term' : search_term};
 	$.getJSON('/espell?callback=?', args, function(data) {
-		if(data.CorrectedQuery.length) {
-			var result = data.Query + " should be spelt " + data.CorrectedQuery;
+		if(data.result.CorrectedQuery.length) {
+			var result = data.result.Query + " should be spelt " + data.result.CorrectedQuery;
 		} else {
-			var result = data.Query + " is spelt correctly or no spelling suggestions could be made";
+			var result = data.result.Query + " is spelt correctly or no spelling suggestions could be made";
 		}
 		$('#result').html(result);
 	});

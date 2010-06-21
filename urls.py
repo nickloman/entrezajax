@@ -7,6 +7,7 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('django.views.generic.simple',
     (r'^examples/elink.html$', 'direct_to_template', {'template' : 'examples/elink.html'}),
     (r'^developer.html$', 'direct_to_template', {'template' : 'developer.html'}),
+    (r'^faq.html$', 'direct_to_template', {'template' : 'faq.html'}),
     (r'^implementation.html$', 'direct_to_template', {'template' : 'implementation.html'}),
 )
 
@@ -18,6 +19,10 @@ urlpatterns += patterns('',
     (r'^examples/espell.html$', 'infopages.example_views.example_with_term',
        {'template' : 'examples/espell.html',
         'default' : 'brest cancar'}
+    ),
+    (r'^examples/efetch.html$', 'infopages.example_views.example_with_term',
+       {'template' : 'examples/efetch.html',
+        'default' : 'shigella toxin'}
     ),
     
     url(r'^espell$', 'json_endpoint.views.espell', name='espell'),

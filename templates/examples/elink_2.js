@@ -6,7 +6,7 @@ $(document).ready(function() {
 	        'max'     : '5'}
 	$.getJSON('/elink+esummary?callback=?', args, function(data) {
 		$('#result2').html('');
-		$.each(data, function(i, item) {
+		$.each(data.result, function(i, item) {
 			var author_list = '';
 			for(var i = 0; i < item.AuthorList.length; i ++) {
 				if(i != 0) {

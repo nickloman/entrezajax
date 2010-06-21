@@ -9,7 +9,7 @@ $(document).ready(function() {
 	        
 	$.getJSON('/elink+esummary?callback=?', args, function(data) {
 		$('#result').html('');
-		$.each(data, function(i, item) {
+		$.each(data.result, function(i, item) {
 			var author_list = '';
 			for(var i = 0; i < item.AuthorList.length; i ++) {
 				if(i != 0) {

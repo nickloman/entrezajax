@@ -55,20 +55,39 @@ def check_developer_api(fn):
 
         return fn(*args)
     return new
+   
+def paginate(request, id_list):
+    start = int(request.GET.get('start', 0))
+    id_list = id_list[start:]    
 
-def dump_result(request, response, records):
+    max = int(request.GET.get('max', 20))
+    id_list = id_list[0:max]
+    
+    return id_list
+
+def dump_result(request, response, records, extradict = {}):
     callback = request.GET.get('callback', None)
     if callback:
         print >>response, "%s(" % (callback,),
-        json.dump(records, response)
+        
+        result = {}
+
+        result['entrezajax'] = {}
+        result['error'] = False
+        
+        result['entrezajax'].update(extradict)
+        
+        result['result'] = records       
+        
+        json.dump(result, response)
         print >>response, ")"
     else:
     	json.dump(records, response)
     
-def handle_request(request, args, fn_name, fn_ptr):
+def handle_request(request, args, fn_name, fn_ptr, extradict = {}):
     response = HttpResponse(mimetype="application/json")
     records = fn_ptr(request.entrezajax_developer_registration, **args)
-    dump_result(request, response, records)
+    dump_result(request, response, records, extradict)
     return response
 
 # the entrez commands
@@ -108,9 +127,13 @@ def esearch_and_other(request, other_fn, other_ptr):
         return response
     else:
         args = keywords('esummary', request.GET)
-        args['id'] = ",".join(record["IdList"])
+        id_list = paginate(request, record["IdList"])
+        
+        args['id'] = ",".join(id_list)
         logging.info(args)
-        return handle_request(request, args, other_fn, other_ptr)
+        return handle_request(request, args, other_fn, other_ptr,
+                              {'count' : len(record["IdList"])}
+                             )
 
 @check_developer_api
 def esearch_and_esummary(request):
@@ -133,10 +156,10 @@ def elink_and_other(request, other_fn, other_ptr):
         response = HttpResponse(mimetype="application/json")
         dump_result(request, response, record)
         return response
-    max = int(request.GET.get('max', 20))
-    id_list = id_list[0:max]
+        
+    id_list = paginate(request, id_list)
     logging.info(id_list)
-
+               
     args = keywords(other_fn, request.GET)
     args['id'] = ",".join(id_list)
     logging.info(args)
