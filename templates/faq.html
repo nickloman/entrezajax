@@ -1,0 +1,22 @@
+{% extends "basic.html" %}
+
+{% block main %}
+		<h1>Entrez-AJAX</h1>
+		<h2>FAQ</h2>
+		<p>
+			<b>Q:</b> Methods return a 500 error, particularly efetch
+		</p>
+		<p>
+			<b>A:</b> Google App Engine enforces a 2 megabyte fetch limit from external services such
+			as Entrez. If this limit is hit, EntrezAJAX will return a 500 error code, as well
+			as setting the dictionary field 'error' to be TRUE within the 'entrezajax' control
+			structure and a descriptive error within the field 'error_message', e.g.<br/>
+			<span class="code">
+			{'entrezajax' : {'error' : True, 'errormessage' : '&lt;some error message&gt;'}}
+			</span>
+			<br/>
+			If this happens to you, consider reducing the number of results returned
+			(if using a combined method) with the <span class="code">max</span> parameter,
+			or use the Esummary method instead.
+		</p>
+{% endblock %}

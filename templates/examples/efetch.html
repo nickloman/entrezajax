@@ -1,0 +1,20 @@
+{% extends "examples/example_template.html" %}
+
+{% block scripthead %}
+{% include "examples/efetch.js" %}
+{% endblock %}
+
+{% block main %}
+		<h1>Efetch Example</h1>
+		<p>
+		</p>
+		<p>
+			<form method="GET" action="?">
+				Search for <input type="text" name="term" value="{{ term }}"> <input type="submit" value=" Go ">
+			</form>
+		</p>
+{% endblock %}
+
+{% block scriptdisplay %}
+{% include "examples/efetch.js" %}
+{% endblock %}
