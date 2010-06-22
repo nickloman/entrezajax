@@ -4,7 +4,7 @@ $(document).ready(function() {
 	        'id'      : '283046693',
 	        'db'      : 'pubmed',
 	        'max'     : '5'}
-	$.getJSON('/elink+esummary?callback=?', args, function(data) {
+	$.getJSON('http://{{ host }}/elink+esummary?callback=?', args, function(data) {
 		$('#result2').html('');
 		$.each(data.result, function(i, item) {
 			var author_list = '';

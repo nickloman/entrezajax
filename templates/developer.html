@@ -54,13 +54,27 @@
 			in the URL passed to the <span class="code">$.getJSON()</span> function.
 		</p>
 		<p>
-			Each method returns a JSON dictionary with two keys. <span class="code">result</span>
-			has the results from Entrez. <span class="code">entrezajax</span> is a dictionary
-			of additional information including a key <span class="code">error</span> which
-			is a boolean field determining whether an error occurred.
+			Other parameters are set on a method-by-method basis detailed below.
 		</p>
 		<p>
-			Other parameters are set on a method-by-method basis detailed below.
+			Each method returns a JSON dictionary with two keys. <span class="code">result</span>
+			has the results from Entrez. <span class="code">entrezajax</span> is a dictionary
+			of additional information.
+		</p>
+		<h4>Error handling</h4>
+		<p>
+			Because it is difficult to handle errors within JSONP where possible the service
+			will return well-formed JSON. If an error has occured an attribute <span class="code">entrezajax.error</span>
+			will be set to True. When this is set, an additional attribute error_message will
+			continue a string describing the nature of the error. Your application should
+			test for an error state and notify the user accordingly.
+		</p>
+		<p>
+			Common reasons for errors include:
+			<ul>
+				<li>Deadline timeout contacting Entrez (currently 5 seconds)
+				<li>URL fetch from Entrez exceeded 2 megabytes in size
+			</ul>
 		</p>
 		<h3>Standard Methods</h3>
 		<h4>Efetch</h4>

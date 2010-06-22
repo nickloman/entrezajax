@@ -66,23 +66,17 @@ def paginate(request, id_list):
     return id_list
 
 def dump_result(request, response, records, extradict = {}):
+    result = {'entrezajax' : {'error' : False}}
+    result['entrezajax'].update(extradict)
+    result['result'] = records       
+    
     callback = request.GET.get('callback', None)
     if callback:
         print >>response, "%s(" % (callback,),
-        
-        result = {}
-
-        result['entrezajax'] = {}
-        result['error'] = False
-        
-        result['entrezajax'].update(extradict)
-        
-        result['result'] = records       
-        
         json.dump(result, response)
         print >>response, ")"
     else:
-    	json.dump(records, response)
+    	json.dump(result, response)
     
 def handle_request(request, args, fn_name, fn_ptr, extradict = {}):
     response = HttpResponse(mimetype="application/json")
@@ -132,8 +126,10 @@ def esearch_and_other(request, other_fn, other_ptr):
         args['id'] = ",".join(id_list)
         logging.info(args)
         return handle_request(request, args, other_fn, other_ptr,
-                              {'count' : len(record["IdList"])}
-                             )
+                              {
+                               'count' : record["Count"],
+                               'retmax' : record["RetMax"]
+                              })
 
 @check_developer_api
 def esearch_and_esummary(request):
@@ -157,13 +153,14 @@ def elink_and_other(request, other_fn, other_ptr):
         dump_result(request, response, record)
         return response
         
+    id_list_len = len(id_list)
     id_list = paginate(request, id_list)
     logging.info(id_list)
                
     args = keywords(other_fn, request.GET)
     args['id'] = ",".join(id_list)
     logging.info(args)
-    return handle_request(request, args, other_fn, other_ptr)
+    return handle_request(request, args, other_fn, other_ptr, {'count' : id_list_len})
     
 @check_developer_api
 def elink_and_esummary(request):

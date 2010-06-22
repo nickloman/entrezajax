@@ -7,7 +7,7 @@ $(document).ready(function() {
 	        'datetype': 'pdat',
 	        'max'     : '5'}
 	        
-	$.getJSON('/elink+esummary?callback=?', args, function(data) {
+	$.getJSON('http://{{ host }}/elink+esummary?callback=?', args, function(data) {
 		$('#result').html('');
 		$.each(data.result, function(i, item) {
 			var author_list = '';

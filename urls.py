@@ -5,13 +5,14 @@ from django.conf.urls.defaults import *
 # admin.autodiscover()
 
 urlpatterns = patterns('django.views.generic.simple',
-    (r'^examples/elink.html$', 'direct_to_template', {'template' : 'examples/elink.html'}),
     (r'^developer.html$', 'direct_to_template', {'template' : 'developer.html'}),
     (r'^faq.html$', 'direct_to_template', {'template' : 'faq.html'}),
     (r'^implementation.html$', 'direct_to_template', {'template' : 'implementation.html'}),
 )
 
 urlpatterns += patterns('',
+    (r'^examples/elink.html$', 'infopages.example_views.example', {'template' : 'examples/elink.html'}),
+    
     (r'^examples/esearch\+esummary.html$', 'infopages.example_views.example_with_term',
        {'template' : 'examples/esearch+esummary.html',
         'default' : 'Venter JC[Auth]'}
